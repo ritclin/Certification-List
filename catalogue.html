@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certification Catalogue — Discounted Exam Vouchers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101a2d;--paper:#fafbfd;--card:#ffffff;--line:#e3e8f1;--slate:#46536b;
+    --accent:#2456e6;--accent-soft:#eaf0ff;--green:#0a7a4b;--green-soft:#e4f5ec;
+    --amber:#8a5a00;--amber-soft:#fdf2da;--violet:#5b2bd6;--violet-soft:#efe9fc;
+    --rose:#b32450;--rose-soft:#fbe7ee;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.55}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px 80px}
+  header{padding:44px 0 26px;border-bottom:3px solid var(--ink)}
+  .kicker{font-family:'Space Grotesk';font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600}
+  h1{font-family:'Space Grotesk';font-size:clamp(28px,4.4vw,44px);font-weight:700;letter-spacing:-.02em;margin:6px 0 10px}
+  .sub{color:var(--slate);max-width:640px;font-size:15px}
+  .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px;font-size:13px;color:var(--slate)}
+  .meta strong{color:var(--ink)}
+  .toolbar{position:sticky;top:0;z-index:20;background:var(--paper);padding:14px 0 10px;border-bottom:1px solid var(--line)}
+  .searchrow{display:flex;gap:10px;align-items:center}
+  #search{flex:1;padding:11px 16px;font:500 15px 'Inter';border:1.5px solid var(--ink);border-radius:8px;background:var(--card);color:var(--ink)}
+  #search:focus{outline:3px solid var(--accent-soft);border-color:var(--accent)}
+  #count{font-family:'Space Grotesk';font-size:13px;font-weight:600;color:var(--slate);white-space:nowrap}
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0 4px;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{font:600 12.5px 'Space Grotesk';padding:6px 13px;border:1.5px solid var(--line);border-radius:999px;background:var(--card);color:var(--slate);cursor:pointer;white-space:nowrap;text-decoration:none}
+  .chip:hover{border-color:var(--accent);color:var(--accent)}
+  section{margin-top:38px;scroll-margin-top:120px}
+  .vhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+  .vhead h2{font-family:'Space Grotesk';font-size:23px;font-weight:700;letter-spacing:-.01em}
+  .vcount{font:600 12px 'Space Grotesk';color:var(--accent);background:var(--accent-soft);padding:3px 10px;border-radius:999px}
+  .vnote{font-size:13.5px;color:var(--slate);max-width:780px;margin-bottom:14px}
+  .vnote.warn{color:var(--amber);background:var(--amber-soft);border-left:3px solid var(--amber);padding:9px 13px;border-radius:0 6px 6px 0;max-width:none}
+  .tablecard{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{font:600 11.5px 'Space Grotesk';letter-spacing:.08em;text-transform:uppercase;color:var(--slate);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);background:#f4f6fb}
+  td{padding:10px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  tr.hit:hover td{background:#f7f9fe}
+  .cname{font-weight:600}
+  .code{font:500 12.5px ui-monospace,Menlo,monospace;color:var(--slate);background:#f1f4f9;padding:2px 7px;border-radius:5px;white-space:nowrap}
+  .num{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .you{font-weight:600;color:var(--green)}
+  .lvl{font:600 11px 'Space Grotesk';padding:3px 9px;border-radius:5px;white-space:nowrap}
+  .lvl.found{background:var(--green-soft);color:var(--green)}
+  .lvl.assoc{background:var(--accent-soft);color:var(--accent)}
+  .lvl.pro{background:var(--violet-soft);color:var(--violet)}
+  .lvl.spec{background:var(--amber-soft);color:var(--amber)}
+  .lvl.arch{background:var(--rose-soft);color:var(--rose)}
+  .lvl.entry{background:#eef1f6;color:var(--slate)}
+  .footer{margin-top:54px;border-top:3px solid var(--ink);padding-top:18px;font-size:13px;color:var(--slate)}
+  .footer p{margin-bottom:8px;max-width:820px}
+  .hidden{display:none}
+  .state{padding:48px 20px;text-align:center;color:var(--slate);font-size:14px}
+  .state.err{color:var(--rose)}
+  .spin{display:inline-block;width:22px;height:22px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:sp .8s linear infinite;margin-bottom:12px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media(max-width:680px){th:nth-child(4),td:nth-child(4){display:none}td,th{padding:9px 12px}.sub{font-size:14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">Exam Voucher Programme</div>
+  <h1>IT Certification Catalogue</h1>
+  <p class="sub">Industry-recognised certifications available with discounted exam vouchers. Pay, receive your voucher code by email, and schedule your exam directly with the testing provider.</p>
+  <div class="meta">
+    <span><strong>Offer:</strong> <span id="offlabel">40%</span> off vendor list price</span>
+    <span><strong>Delivery:</strong> voucher code after payment</span>
+    <span><strong>Guarantee:</strong> 100% refund if voucher cannot be supplied</span>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="searchrow">
+    <input id="search" type="text" placeholder="Search certifications, exam codes, vendors… e.g. Security+, AZ-104, DevOps" aria-label="Search certifications">
+    <span id="count"></span>
+  </div>
+  <nav class="chips" id="chips" aria-label="Jump to vendor"></nav>
+</div>
+
+<div id="catalogue"></div>
+<div class="state" id="loading"><div class="spin"></div><div>Loading the latest catalogue…</div></div>
+<div class="state err hidden" id="error">Couldn't load the catalogue right now. Please refresh in a moment.</div>
+<div class="state hidden" id="noresults">No certifications match your search. Try a shorter term, e.g. “cloud” or “security”.</div>
+
+<div class="footer">
+  <p><strong>Prices:</strong> List prices shown are the vendors' standard USD exam fees and are approximate — they vary by region and change periodically. Your final quote is confirmed before payment. Microsoft exams are priced in local currency by country.</p>
+  <p><strong>Vouchers:</strong> Codes are vendor- and exam-specific, redeemed when scheduling via Pearson VUE (or the vendor's own platform where noted). Validity periods and regional restrictions apply per vendor.</p>
+  <p><strong>Refunds:</strong> If we are unable to supply a valid discounted voucher for your selected exam, you receive a full 100% refund.</p>
+</div>
+
+</div>
+
+<script>
+/* ================= CONFIG — edit these two lines only ================= */
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1IW8LMZx-KO8yhnPlUt0ZNpAyHPNclBApKvUSlUZzpd0/gviz/tq?tqx=out:csv";
+const DISCOUNT = 0.40;   // 0.40 = 40% off. Change to 0.30 for 30% off, etc.
+/* ====================================================================== */
+
+// Vendor descriptions & ordering live here (rarely change). Cert rows come from the Sheet.
+const VENDORS = {
+  "AWS":{id:"aws",note:"All AWS exams are delivered via Pearson VUE — test centre or OnVue online proctoring."},
+  "Microsoft":{id:"microsoft",note:"Any current Microsoft exam delivered via Pearson VUE can be quoted on request. Priced in local currency by region."},
+  "CompTIA":{id:"comptia",note:"Vendor-neutral, globally recognised. Delivered via Pearson VUE (test centre or online). A+ requires two exams."},
+  "Python Institute (OpenEDG)":{id:"python",note:"Validates Python skills from entry to professional level. Delivered via Pearson VUE."},
+  "Oracle":{id:"oracle",note:"Database certifications via Pearson VUE; OCI cloud exams via Oracle MyLearn. Confirm delivery channel per exam."},
+  "Palo Alto Networks":{id:"paloalto",warn:"Programme restructured into role-based tracks. Legacy exams (PCNSE, PCNSA, PCCET, etc.) are retiring — several cannot be taken after 30 April 2026. All current exams are in-person at Pearson VUE test centres only. Certifications valid 2 years.",note:"Three tracks: Network Security · Security Operations · Cloud Security."},
+  "EC-Council":{id:"eccouncil",note:"CSCU confirmed in programme. Other EC-Council certifications (CEH, CND, CHFI) available on request."},
+  "Google Cloud":{id:"gcp",note:"Delivered via Kryterion/Webassessor (not Pearson VUE)."},
+  "Certiport (Pearson VUE)":{id:"certiport",note:"Entry-level and productivity certifications delivered through Certiport-authorised test centres. Per-exam pricing varies; quoted on request."}
+};
+
+const LVL={"Foundational":"found","Entry":"entry","Associate":"assoc","Professional":"pro","Specialty":"spec","Specialist":"spec","Expert":"arch","Architect":"arch","User":"entry"};
+const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+const fmt=n=>(n==null||n==="")?"On request":"$"+Number(n).toLocaleString("en-US");
+const off=n=>(n==null||n==="")?"On request":"$"+Math.round(Number(n)*(1-DISCOUNT)).toLocaleString("en-US");
+
+// Minimal CSV parser that handles quoted fields containing commas
+function parseCSV(text){
+  const rows=[];let row=[],cell="",q=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    if(q){
+      if(c==='"'){ if(text[i+1]==='"'){cell+='"';i++;} else q=false; }
+      else cell+=c;
+    }else{
+      if(c==='"')q=true;
+      else if(c===',') {row.push(cell);cell="";}
+      else if(c==='\n'){row.push(cell);rows.push(row);row=[];cell="";}
+      else if(c==='\r'){}
+      else cell+=c;
+    }
+  }
+  if(cell.length||row.length){row.push(cell);rows.push(row);}
+  return rows;
+}
+
+document.getElementById("offlabel").textContent=Math.round(DISCOUNT*100)+"%";
+
+function render(rows){
+  // rows: array of {vendor,name,code,level,price}
+  const groups={};const order=[];
+  rows.forEach(r=>{
+    if(!groups[r.vendor]){groups[r.vendor]=[];order.push(r.vendor);}
+    groups[r.vendor].push(r);
+  });
+  // honour VENDORS order first, then any extras
+  const ordered=Object.keys(VENDORS).filter(v=>groups[v]).concat(order.filter(v=>!VENDORS[v]));
+
+  const cat=document.getElementById("catalogue");
+  const chips=document.getElementById("chips");
+  cat.innerHTML="";chips.innerHTML="";
+  let total=0;
+
+  ordered.forEach(vendor=>{
+    const list=groups[vendor];total+=list.length;
+    const cfg=VENDORS[vendor]||{id:slug(vendor)};
+    const a=document.createElement("a");a.className="chip";a.href="#"+cfg.id;a.textContent=vendor;chips.appendChild(a);
+
+    const sec=document.createElement("section");sec.id=cfg.id;
+    sec.innerHTML=`
+      <div class="vhead"><h2>${vendor}</h2><span class="vcount">${list.length} certification${list.length>1?"s":""}</span></div>
+      ${cfg.warn?`<p class="vnote warn">⚠ ${cfg.warn}</p>`:""}
+      ${cfg.note?`<p class="vnote">${cfg.note}</p>`:""}
+      <div class="tablecard"><table>
+        <thead><tr><th>Certification</th><th>Exam code</th><th>Level</th><th>List price*</th><th>Your price (${Math.round(DISCOUNT*100)}% off)</th></tr></thead>
+        <tbody>
+          ${list.map(c=>`<tr class="hit" data-s="${(c.name+" "+c.code+" "+vendor+" "+c.level).toLowerCase()}">
+            <td class="cname">${c.name}</td>
+            <td>${c.code?`<span class="code">${c.code}</span>`:"—"}</td>
+            <td><span class="lvl ${LVL[c.level]||"entry"}">${c.level||"—"}</span></td>
+            <td class="num">${fmt(c.price)}</td>
+            <td class="num you">${off(c.price)}</td>
+          </tr>`).join("")}
+        </tbody>
+      </table></div>`;
+    cat.appendChild(sec);
+  });
+
+  const countEl=document.getElementById("count");
+  const setCount=n=>countEl.textContent=`${n} of ${total} exams`;
+  setCount(total);
+
+  document.getElementById("search").addEventListener("input",e=>{
+    const q=e.target.value.trim().toLowerCase();let shown=0;
+    document.querySelectorAll("section").forEach(sec=>{
+      let vis=0;
+      sec.querySelectorAll("tr.hit").forEach(tr=>{
+        const ok=!q||tr.dataset.s.includes(q);
+        tr.classList.toggle("hidden",!ok);if(ok)vis++;
+      });
+      sec.classList.toggle("hidden",vis===0);shown+=vis;
+    });
+    document.getElementById("noresults").classList.toggle("hidden",shown!==0);
+    setCount(shown);
+  });
+}
+
+async function load(){
+  try{
+    if(SHEET_CSV_URL.includes("PASTE_YOUR")) throw new Error("not configured");
+    const res=await fetch(SHEET_CSV_URL);
+    if(!res.ok) throw new Error("http "+res.status);
+    const text=await res.text();
+    const rows=parseCSV(text).filter(r=>r.length>=4 && r[0].trim());
+    const header=rows.shift(); // drop header row
+    const data=rows.map(r=>({vendor:r[0].trim(),name:r[1].trim(),code:r[2].trim(),level:r[3].trim(),price:(r[4]||"").trim()}))
+                   .filter(r=>r.name);
+    if(!data.length) throw new Error("empty");
+    document.getElementById("loading").classList.add("hidden");
+    render(data);
+  }catch(err){
+    document.getElementById("loading").classList.add("hidden");
+    const e=document.getElementById("error");
+    e.classList.remove("hidden");
+    if(String(err.message).includes("not configured"))
+      e.textContent="Setup needed: paste your published Google Sheet CSV link into SHEET_CSV_URL near the top of this file.";
+  }
+}
+load();
+</script>
+</body>
+</html>
