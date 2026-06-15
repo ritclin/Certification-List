@@ -14,6 +14,7 @@
     --rose:#b32450;--rose-soft:#fbe7ee;
   }
   *{box-sizing:border-box;margin:0;padding:0}
+  html,body{overflow-x:hidden;max-width:100%}
   body{font-family:'Inter',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.55}
   .wrap{max-width:1040px;margin:0 auto;padding:0 20px 80px}
   header{padding:44px 0 26px;border-bottom:3px solid var(--ink)}
@@ -37,8 +38,8 @@
   .vcount{font:600 12px 'Space Grotesk';color:var(--accent);background:var(--accent-soft);padding:3px 10px;border-radius:999px}
   .vnote{font-size:13.5px;color:var(--slate);max-width:780px;margin-bottom:14px}
   .vnote.warn{color:var(--amber);background:var(--amber-soft);border-left:3px solid var(--amber);padding:9px 13px;border-radius:0 6px 6px 0;max-width:none}
-  .tablecard{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-  table{width:100%;border-collapse:collapse;font-size:14px}
+  .tablecard{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}
   th{font:600 11.5px 'Space Grotesk';letter-spacing:.08em;text-transform:uppercase;color:var(--slate);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);background:#f4f6fb}
   td{padding:10px 16px;border-bottom:1px solid var(--line);vertical-align:top}
   tr:last-child td{border-bottom:none}
@@ -61,7 +62,15 @@
   .state.err{color:var(--rose)}
   .spin{display:inline-block;width:22px;height:22px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:sp .8s linear infinite;margin-bottom:12px}
   @keyframes sp{to{transform:rotate(360deg)}}
-  @media(max-width:680px){th:nth-child(4),td:nth-child(4){display:none}td,th{padding:9px 12px}.sub{font-size:14px}}
+  @media(max-width:680px){
+    .wrap{padding:0 14px 60px}
+    h1{font-size:30px}
+    .meta{gap:10px 14px;font-size:12px}
+    td,th{padding:9px 12px}
+    .sub{font-size:14px}
+    table{font-size:13px;min-width:520px}
+    .vhead h2{font-size:20px}
+  }
 </style>
 </head>
 <body>
